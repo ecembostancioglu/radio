@@ -5,7 +5,7 @@ class RadioStations{
     RadioStation(
         name: 'Radio ZET',
         streamUrl: 'https://zt.cdn.eurozet.pl/zet-tun.mp3',
-        photoUrl: 'assets/bbc.jpg'),
+        photoUrl: 'assets/zet.png'),
     RadioStation(
         name: 'Power FM',
         streamUrl: 'http://51.255.235.165:5052/live',

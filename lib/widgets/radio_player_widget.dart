@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:radio/providers/radio_provider.dart';
 import 'package:radio/widgets/radio_list.dart';
+import 'package:volume_controller/volume_controller.dart';
+
+import '../api/radio_api.dart';
 
 class RadioPlayerWidget extends StatefulWidget {
   const RadioPlayerWidget({
@@ -17,8 +20,11 @@ class _RadioPlayerWidgetState extends State<RadioPlayerWidget>
     with SingleTickerProviderStateMixin{
 
   bool listEnabled = false;
-  late AnimationController animationController;
+  bool isPlaying = true;
+  bool isMuted = false;
 
+  late AnimationController animationController;
+  late VolumeController volumeController;
   late Animation<Offset> radioOffset;
   late Animation<Offset> radioListOffset;
 
@@ -44,7 +50,16 @@ class _RadioPlayerWidgetState extends State<RadioPlayerWidget>
        parent: animationController,
        curve: Curves.easeOut));
 
+   RadioApi.player.stateStream.listen((event) {
+     setState(() {
+       isPlaying = event;
+     });
+   });
+   volumeController = VolumeController();
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -94,11 +109,29 @@ class _RadioPlayerWidgetState extends State<RadioPlayerWidget>
                         color: listEnabled ? Colors.amber : Colors.black,
                         icon: Icon(Icons.list,size: 30)),
                     IconButton(
-                        onPressed: (){},
-                        icon: Icon(Icons.pause)),
+                        onPressed: (){
+                          isPlaying
+                              ? RadioApi.player.stop()
+                              : RadioApi.player.play();
+                        },
+                        icon: Icon(
+                            isPlaying
+                                ? Icons.stop
+                                : Icons.play_arrow)),
                     IconButton(
-                        onPressed: (){},
-                        icon: Icon(Icons.volume_up)),
+                        onPressed: ()async{
+                          if(isMuted){
+                            volumeController.setVolume(0.5);
+                          }else{
+                            volumeController.maxVolume();
+                          }
+                          setState(() {
+                            isMuted = !isMuted;
+                          });
+                        },
+                        icon: Icon( isMuted
+                            ? Icons.volume_off
+                            : Icons.volume_up)),
                   ],
                 ),
               ],

@@ -5,6 +5,8 @@ import 'package:radio/model/radio_station.dart';
 import 'package:radio/providers/radio_provider.dart';
 import 'package:radio/utils/radio_stations.dart';
 
+import '../api/radio_api.dart';
+
 class RadioList extends StatefulWidget {
   const RadioList({Key? key}) : super(key: key);
 
@@ -51,9 +53,10 @@ class _RadioListState extends State<RadioList> {
             ),
             horizontalTitleGap: 10,
             title: Text(station.name),
-            onTap: (){
+            onTap: ()async{
               provider.setRadioStation(station);
               SharedPref.setStation(station);
+              await RadioApi.changeStation(station);
               setState(() {
                 selectedStation=station;
               });
