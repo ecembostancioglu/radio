@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:radio/providers/radio_provider.dart';
 import 'package:radio/widgets/radio_list.dart';
 
-class RadioPlayer extends StatefulWidget {
-  const RadioPlayer({
+class RadioPlayerWidget extends StatefulWidget {
+  const RadioPlayerWidget({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<RadioPlayer> createState() => _RadioPlayerState();
+  State<RadioPlayerWidget> createState() => _RadioPlayerWidgetState();
 }
 
-class _RadioPlayerState extends State<RadioPlayer>
+class _RadioPlayerWidgetState extends State<RadioPlayerWidget>
     with SingleTickerProviderStateMixin{
 
   bool listEnabled = false;
@@ -60,9 +62,15 @@ class _RadioPlayerState extends State<RadioPlayer>
                   child: SizedBox(
                     height: ScreenUtil().screenHeight*0.24,
                     width: ScreenUtil().screenWidth,
-                    child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Image.asset('assets/img.png')),
+                    child: Consumer<RadioProvider>(
+                      builder: ((context,value,child){
+                        return Image.asset(value.station.photoUrl,
+                          fit:BoxFit.cover);
+                      }),
+                      child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Image.asset('assets/img.png')),
+                    ),
                   ),
                 ),
                 Row(

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:radio/widgets/radio_list.dart';
-import 'package:radio/widgets/radio_player.dart';
+import 'package:radio/widgets/radio_player_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,7 +18,7 @@ class _HomePageState extends State<HomePage> {
           child: Text('Radio FM'),
         ),
           backgroundColor: Colors.grey),
-      body: RadioPlayer()
+      body: RadioPlayerWidget()
     );
   }
 }

@@ -1,12 +1,12 @@
-import '../model/radio.dart';
+import '../model/radio_station.dart';
 
 class RadioStations{
-  static List<Radio> allStations=[
-    Radio(
+  static List<RadioStation> allStations=[
+    RadioStation(
         name: 'Radio ZET',
         streamUrl: 'https://zt.cdn.eurozet.pl/zet-tun.mp3',
         photoUrl: 'assets/bbc.jpg'),
-    Radio(
+    RadioStation(
         name: 'Power FM',
         streamUrl: 'http://51.255.235.165:5052/live',
         photoUrl: 'assets/power.jpeg'),
